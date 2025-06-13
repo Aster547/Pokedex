@@ -1,6 +1,34 @@
+'use client'
+
 import Pokecard from "@/components/Pokecard";
+import { fetchPikachu } from "@/server/server";
+import { useEffect, useState } from "react";
+import { Pokemon } from '@/customTypes'; // Adjust the path as needed
 
 export default function Home() {
+
+  const [pikachu, setPikachu] = useState<Pokemon | null>(null);
+
+  useEffect(() => {
+    try {
+      async function getPikachu() {
+        const data = await fetchPikachu();
+        if (data) {
+          setPikachu(data);
+        }
+        else {
+          console.log("Pikachu retrieval failed.");
+        }
+      }
+
+      getPikachu();
+    }
+    catch(err){
+      console.log(err);
+    }
+
+  },[]);
+
   return (
     <div>
       <div className="w-[100%] h-24 bg-red-500 flex items-center">
@@ -8,8 +36,8 @@ export default function Home() {
           Pokedex
         </h1>
       </div>
-      <Pokecard pokeId={1010} pokemon="Charmander" pokeURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"  />
 
+      {pikachu && <Pokecard pokemon={pikachu} />}
     </div>
   );
 }
