@@ -1,3 +1,5 @@
+import Pokecard from "@/components/Pokecard";
+
 export default function Home() {
   return (
     <div>
@@ -6,6 +8,8 @@ export default function Home() {
           Pokedex
         </h1>
       </div>
+      <Pokecard pokeId={1010} pokemon="Charmander" pokeURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"  />
+
     </div>
   );
 }
