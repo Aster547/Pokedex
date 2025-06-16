@@ -1,33 +1,22 @@
 'use client'
 
 import Pokecard from "@/components/Pokecard";
-import { fetchPikachu } from "@/server/server";
 import { useEffect, useState } from "react";
-import { Pokemon } from '@/customTypes'; // Adjust the path as needed
+import { Pokemon } from '@/customTypes';
 
 export default function Home() {
-
-  const [pikachu, setPikachu] = useState<Pokemon | null>(null);
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState(true); //this is set to false to check whether there's a problem with the request
 
   useEffect(() => {
-    try {
-      async function getPikachu() {
-        const data = await fetchPikachu();
-        if (data) {
-          setPikachu(data);
-        }
-        else {
-          console.log("Pikachu retrieval failed.");
-        }
-      }
-
-      getPikachu();
-    }
-    catch(err){
-      console.log(err);
-    }
-
-  },[]);
+    fetch('http://localhost:3000/pokemon')
+      .then(res => res.json())
+      .then(data => {
+        setPokemonList(data);
+        setLoading(true);
+      })
+      .catch(() => setLoading(true));
+  }, []);
 
   return (
     <div>
@@ -37,11 +26,15 @@ export default function Home() {
         </h1>
       </div>
 
-      <ul>
-        {pikachu ? (
-          <Pokecard pokemon={pikachu} />
-        ) : (
+      <ul className="flex flex-wrap gap-4 justify-center mt-8">
+        {loading ? (
           <li className="text-center text-xl">Loading...</li>
+        ) : (
+          pokemonList.map((pokemon) => (
+            <li key={pokemon.name}>
+              <Pokecard pokemon={pokemon} />
+            </li>
+          ))
         )}
       </ul>
     </div>

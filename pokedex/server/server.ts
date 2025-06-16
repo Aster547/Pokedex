@@ -20,15 +20,13 @@ async function getPokemon(): Promise<Pokemon[]> {
   }
 }
 
-http.createServer((req: IncomingMessage, res: ServerResponse) => {
+http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
   if (req.url === '/pokemon') {
-    // Set cache headers
-
     const seconds = 300;
-
     res.setHeader('Cache-Control', `public, max-age=${seconds}`);
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(getPokemon()));
+    const pokemon = await getPokemon();
+    res.end(JSON.stringify(pokemon));
   } else {
     res.writeHead(404);
     res.end('Not Found');
