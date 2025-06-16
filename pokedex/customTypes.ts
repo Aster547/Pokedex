@@ -2,7 +2,14 @@ export type Pokemon = {
   name: string;
   id: number;
   sprites: {
-    front_default: string;}
+    front_default: string;
+  }
+  types:  { 
+    slot: number; 
+    type: { 
+      name: string; 
+      url: string }
+  }[];
   // Add more fields as needed based on the API response
 };
 
