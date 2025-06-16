@@ -37,7 +37,13 @@ export default function Home() {
         </h1>
       </div>
 
-      {pikachu && <Pokecard pokemon={pikachu} />}
+      <ul>
+        {pikachu ? (
+          <Pokecard pokemon={pikachu} />
+        ) : (
+          <li className="text-center text-xl">Loading...</li>
+        )}
+      </ul>
     </div>
   );
 }
