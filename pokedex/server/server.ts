@@ -3,6 +3,7 @@ import { Pokemon } from '@/customTypes';
 
 const limit = 10;
 const offset = 0;
+const PORT = 8080;
 
 const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
 // Gets the first 10 Pokémon
@@ -21,7 +22,9 @@ async function getPokemon(): Promise<Pokemon[]> {
 }
 
 http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
+  console.log("I am listenning");
   if (req.url === '/pokemon') {
+    console.log("Request received");
     const seconds = 300;
     res.setHeader('Cache-Control', `public, max-age=${seconds}`);
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -31,8 +34,9 @@ http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
     res.writeHead(404);
     res.end('Not Found');
   }
-}).listen(3000);
-
+}).listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
 
 /*
 import { Pokemon } from '@/customTypes';

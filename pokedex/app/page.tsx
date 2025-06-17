@@ -9,13 +9,18 @@ export default function Home() {
   const [loading, setLoading] = useState(true); //this is set to false to check whether there's a problem with the request
 
   useEffect(() => {
-    fetch('http://localhost:3000/pokemon')
+    fetch('http://localhost:8080/pokemon')
       .then(res => res.json())
       .then(data => {
         setPokemonList(data);
-        setLoading(true);
+        setLoading(false);
+        console.log(pokemonList);
+        console.log("hi");
       })
-      .catch(() => setLoading(true));
+      .catch(() => {
+        setLoading(true);
+        console.log("Failed to load pokemon");
+      });
   }, []);
 
   return (
@@ -31,7 +36,7 @@ export default function Home() {
           <li className="text-center text-xl">Loading...</li>
         ) : (
           pokemonList.map((pokemon) => (
-            <li key={pokemon.name}>
+            <li key={pokemon.id}>
               <Pokecard pokemon={pokemon} />
             </li>
           ))
