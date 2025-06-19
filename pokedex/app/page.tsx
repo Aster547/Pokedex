@@ -15,7 +15,6 @@ export default function Home() {
         setPokemonList(data);
         setLoading(false);
         console.log(pokemonList);
-        console.log("hi");
       })
       .catch(() => {
         setLoading(true);

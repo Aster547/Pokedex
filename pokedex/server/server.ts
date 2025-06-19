@@ -24,8 +24,15 @@ async function getPokemon(): Promise<Pokemon[]> {
 http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
   console.log("I am listenning");
   if (req.url === '/pokemon') {
+    
     console.log("Request received");
+      
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
     const seconds = 300;
+
     res.setHeader('Cache-Control', `public, max-age=${seconds}`);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     const pokemon = await getPokemon();

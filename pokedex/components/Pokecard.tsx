@@ -8,7 +8,7 @@ type PokecardProps = {
 const Pokecard: FC<PokecardProps> = ({ pokemon }) => (
   <div className="w-64 h-84 bg-[#fbd743] border-2 rounded-4xl justify-center items-center flex flex-col">
     <img
-      src={pokemon.sprites.front_default}
+      src={pokemon.sprites?.front_default}
       alt="pokemon sprites"
       className="w-50 h-50 mt-2 bg-white rounded-3xl"
     />
